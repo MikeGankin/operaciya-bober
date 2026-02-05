@@ -291,12 +291,39 @@ npm run build
 
 ---
 
-## Rewrite путей картинок под CMS
-
-Если CMS требует другой путь для картинок:
+## Проверка перед билдом
 
 ```bash
-npm run build -- /upload/blocks
+npm run check
+```
+
+Проверяет, что `assetsPrefix` в `src/order.json` задан и не является плейсхолдером.
+
+---
+
+## Rewrite путей картинок под CMS
+
+Если CMS требует другой путь для картинок, укажите префикс (относительно CDN базы):
+
+CDN база зашита в скрипт:
+
+```
+https://b2ccdn.coral.ru/content
+```
+
+Префикс можно передать через CLI:
+
+```bash
+npm run build -- landing-pages/uae-segmentation
+```
+
+Или укажите префикс в `src/order.json`:
+
+```json
+{
+  "assetsPrefix": "landing-pages/uae-segmentation",
+  "blocks": ["hero", "welcome"]
+}
 ```
 
 Что происходит:
@@ -305,9 +332,10 @@ npm run build -- /upload/blocks
 2. пути к картинкам переписываются:
 
 - из `/hero-bg.jpg`
-- в `/upload/blocks/hero-bg.jpg`
+- в `https://b2ccdn.coral.ru/content/landing-pages/uae-segmentation/hero-bg.jpg`
 
-Если аргумент **не передан**, rewrite пропускается.
+Если аргумент **не передан** и `assetsPrefix` пустой — rewrite пропускается.
+`assetsPrefix` — это путь до папки, **без имени файла**.
 
 ### Что переписывается
 

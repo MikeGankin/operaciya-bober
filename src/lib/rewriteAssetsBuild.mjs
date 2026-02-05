@@ -3,23 +3,52 @@ import path from "node:path";
 
 const ROOT = process.cwd();
 const CMS_DIR = path.resolve(ROOT, "@CMS");
+const ORDER_FILE = path.resolve(ROOT, "src/order.json");
 const prefixArg = process.argv[2];
 
-if (!prefixArg) {
-  console.log("Usage: node scripts/rewrite-images.mjs <prefix>");
-  console.log("Example: node scripts/rewrite-images.mjs /some-folder/");
-  process.exit(1);
+// CDN base (hardcoded start of path)
+const CDN_BASE = "https://b2ccdn.coral.ru/content";
+
+function readOrderPrefix() {
+  if (!fs.existsSync(ORDER_FILE)) return null;
+  try {
+    const json = JSON.parse(fs.readFileSync(ORDER_FILE, "utf8"));
+    const p = json?.assetsPrefix;
+    return typeof p === "string" && p.trim() ? p.trim() : null;
+  } catch {
+    return null;
+  }
 }
 
-function normalizePrefix(p) {
-  let s = String(p).trim();
-  if (!s.startsWith("/")) s = "/" + s;
+const prefixFromOrder = readOrderPrefix();
+const rawPrefix = prefixArg || prefixFromOrder;
+
+if (!rawPrefix) {
+  console.log("[rewrite-images] skip: no prefix provided");
+  console.log('Hint: set "assetsPrefix" in src/order.json or pass CLI arg');
+  process.exit(0);
+}
+
+if (/<[^>]+>/.test(rawPrefix)) {
+  console.warn(`[rewrite-images] warning: assetsPrefix looks like placeholder "${rawPrefix}"`);
+  console.warn("[rewrite-images] skip: set a real path or pass CLI arg");
+  process.exit(0);
+}
+
+function normalizeBase(p) {
+  return String(p || "").trim().replace(/\/+$/, "");
+}
+
+function normalizeRelPrefix(p) {
+  let s = String(p || "").trim();
+  s = s.replace(/^\/+/, ""); // убрать leading /
   s = s.replace(/\/+$/, ""); // убрать trailing /
-  if (s === "") s = "/";
   return s;
 }
 
-const PREFIX = normalizePrefix(prefixArg);
+const BASE = normalizeBase(CDN_BASE);
+const REL_PREFIX = normalizeRelPrefix(rawPrefix);
+const FULL_PREFIX = REL_PREFIX ? `${BASE}/${REL_PREFIX}` : BASE;
 
 function isSkippable(u) {
   return (
@@ -37,15 +66,11 @@ function isRootRel(u) {
   return typeof u === "string" && u.startsWith("/") && !u.startsWith("//");
 }
 
-function alreadyPrefixed(u) {
-  return PREFIX !== "/" && (u === PREFIX || u.startsWith(PREFIX + "/"));
-}
-
 function joinPrefix(u) {
   if (!isRootRel(u) || isSkippable(u)) return u;
-  if (PREFIX === "/") return u;
-  if (alreadyPrefixed(u)) return u;
-  return PREFIX + u; // u уже начинается с /
+  if (!REL_PREFIX) return BASE + u;
+  if (u === `/${REL_PREFIX}` || u.startsWith(`/${REL_PREFIX}/`)) return BASE + u;
+  return FULL_PREFIX + u; // u уже начинается с /
 }
 
 function rewriteSrcset(srcset) {
@@ -150,4 +175,6 @@ for (const file of files) {
   }
 }
 
-console.log(`[rewrite-images] done. prefix="${PREFIX}", changed=${changed}/${files.length}`);
+console.log(
+  `[rewrite-images] done. base="${BASE}", prefix="${REL_PREFIX}", changed=${changed}/${files.length}`
+);

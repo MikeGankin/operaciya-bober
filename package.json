@@ -14,6 +14,7 @@
     "gen:styles:watch": "node src/lib/gen-styles-index.mjs --watch",
     "gen:all": "npm run gen:markup && npm run gen:scripts && npm run gen:styles",
     "dev": "npm run gen:all && concurrently -n MARKUP,SCRIPTS,STYLES,CDN,VITE -c auto \"npm:gen:markup:watch\" \"npm:gen:scripts:watch\" \"npm:gen:styles:watch\" \"npm:cdn\" \"vite\"",
+    "check": "node src/lib/check-assets-prefix.mjs",
     "build": "node src/lib/build-cms.mjs && node src/lib/rewriteAssetsBuild.mjs"
   },
   "devDependencies": {
@@ -25,6 +26,8 @@
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
-    "express": "^5.2.1"
+    "accordion-js": "^3.4.1",
+    "express": "^5.2.1",
+    "swiper": "^12.1.0"
   }
 }

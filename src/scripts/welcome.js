@@ -1,9 +1,6 @@
 export default function example() {
-  const el = document.querySelector(".example");
-  if (!el) return;
+    const link = document.querySelector('[href="#link"]')
+    if (!link) return;
 
-  const element = document.createElement("span");
-  element.innerHTML = "<br> А я текст из скрипта";
-
-  el.insertAdjacentElement('afterend', element);
+    link.addEventListener('click', () => alert('Link clicked'));
 }
