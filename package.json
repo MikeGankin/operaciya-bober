@@ -27,6 +27,7 @@
     "vite-plugin-monkey": "^4.0.0"
   },
   "dependencies": {
+    "@coraltravelcenter/corallium": "^1.0.5",
     "@vitejs/plugin-vue": "^6.0.3",
     "accordion-js": "^3.4.1",
     "express": "^5.2.1",

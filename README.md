@@ -218,6 +218,31 @@ public/
 
 ---
 
+### SCSS миксин для фоновых картинок
+
+Для фонов используем миксин `bg-cdn` из `src/styles/_mixins.scss`:
+
+```scss
+@use "./mixins" as *;
+
+.hero {
+  @include bg-cdn("/hero-bg.jpg");
+}
+```
+
+Миксин генерирует две строки `background-image`:
+
+- `url("/hero-bg.jpg")` — базовый путь (используется на build)
+- `url(var(--cdn-prefix)/hero-bg.jpg)` — dev‑путь через локальный CDN
+
+В dev переменная `--cdn-prefix` задаётся в `src/main.js` (сейчас это `http://localhost:3001`),  
+поэтому фон берётся с express‑сервера.
+
+В build переменная не задана, вторая строка становится невалидной и игнорируется,  
+а первая переписывается на CDN через `rewriteAssetsBuild.mjs` (если задан `assetsPrefix`).
+
+---
+
 ## Express CDN (dev)
 
 В dev-режиме поднимается **локальный CDN**:

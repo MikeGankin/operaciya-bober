@@ -5,6 +5,7 @@ import {setupLocalCdnAssetRewrite} from "./lib/rewriteAssetsDev.js";
 
 const CONTAINER_ID = "monkey-app";
 const FLAG = "monkeyMounted";
+const CDN_BASE = "http://localhost:3001";
 
 function mount(container) {
   if (container.dataset[FLAG] === "1") return;
@@ -27,9 +28,10 @@ function mount(container) {
   const container = document.getElementById(CONTAINER_ID);
   if (!container) return;
   mount(container);
+  document.documentElement.style.setProperty("--cdn-prefix", CDN_BASE);
   setupLocalCdnAssetRewrite({
     root: container,
-    cdnBase: "http://localhost:3001",
+    cdnBase: CDN_BASE,
     enabled: true, // dev-only (потому что этот код будет жить только в dev bundle)
   });
 })();
