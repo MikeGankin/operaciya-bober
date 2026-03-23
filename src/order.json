@@ -1,6 +1,11 @@
 {
-  "assetsPrefix": "landing-pages/<your-project>",
+  "assetsPrefix": "landing-pages/bobr",
   "blocks": [
-    "welcome"
+    "welcome",
+    "navigation",
+    "text",
+    "instruction",
+    "conditions",
+    "recomendation"
   ]
 }

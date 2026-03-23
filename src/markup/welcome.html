@@ -1,14 +1,14 @@
-<section class="sunmar kv">
-    <div class="wrapper">
-        <div class="content">
-            <h1>Не выгорайте — загорайте!</h1>
-        </div>
-        <div class="visual">
-            <picture>
-                <source media="(min-width: 768px)"
-                        srcset="https://b2ccdn.sunmar.ru/content/landing-pages/bobr/kv-bober.webp">
-                <img src="https://b2ccdn.sunmar.ru/content/landing-pages/bobr/kv-bober-mob.webp">
-            </picture>
-        </div>
+<section class="sunmarino kv">
+    <div class="sunmarino-container">
+        <sunmar-kv>
+            <sunmar-image slot="image" media="(min-width: 768px)" alt="Раннее бронирование туров"
+                          srcset="https://b2ccdn.sunmar.ru/content/landing-pages/bobr/kv-bober.webp"
+                          src="https://b2ccdn.sunmar.ru/content/landing-pages/bobr/kv-bober-mob.webp"></sunmar-image>
+            <h1 slot="title">Не выгорайте — загорайте!</h1>
+            <p slot="text">Отправляйтесь в отпуск в апреле, пока другие работают</p>
+            <div slot="actions">
+                <sunmar-button type="primary">Подобрать тур</sunmar-button>
+            </div>
+        </sunmar-kv>
     </div>
 </section>
