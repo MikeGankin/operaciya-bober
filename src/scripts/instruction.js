@@ -76,7 +76,11 @@ export default async function instruction() {
     );
   });
 
-  gsap.to(".road-line", {
+  const roadLine = window.innerWidth >= 768
+      ? ".road-line--desktop"
+      : ".road-line--mobile";
+
+  gsap.to(roadLine, {
     strokeDashoffset: -140,
     ease: "none",
     scrollTrigger: {

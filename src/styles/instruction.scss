@@ -2,12 +2,25 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: 32px;
+  }
 }
 
 .bobr-place {
   border-radius: var(--radius-border_Radius_Base, 16px) var(--radius-border_Radius_Base, 16px) 56px 56px;
   background: #EDF2FF;
   overflow: clip;
+
+  @media (min-width: 1024px) {
+    border-radius: 16px 56px 56px 16px;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
 
   h3 {
     padding: 24px 24px 0 24px;
@@ -20,6 +33,10 @@
   justify-content: space-between;
   max-height: 180px;
   width: 100%;
+
+  @media (min-width: 1024px) {
+    margin-top: auto;
+  }
 }
 
 .bobr-chemodan, .bobr-bobr {
@@ -29,11 +46,28 @@
 .bobr-chemodan {
   bottom: -30px;
   left: 0;
+
+  @media (min-width: 1024px) {
+    bottom: 30px;
+    min-width: 170px;
+  }
 }
 
 .bobr-bobr {
   right: 0;
   bottom: 0;
+  z-index: 2;
+
+
+  @media (min-width: 1024px) {
+    min-width: 400px;
+    right: 40%;
+    bottom: 50%;
+  }
+
+  @media (min-width: 1280px) {
+    right: 10%;
+  }
 }
 
 .anim-grid {
@@ -41,9 +75,14 @@
   width: 100%;
   min-height: 512px;
   overflow: hidden;
-  border-radius: 32px;
+  border-radius: 56px 56px 32px 32px;
   background: #FEEEE7;
   isolation: isolate;
+  
+  @media (min-width: 1024px) {
+    border-radius: 56px 16px 16px 56px;
+    min-height: 460px;
+  }
 
   &::before {
     content: '';
@@ -51,27 +90,17 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: linear-gradient(
-                    35deg,
-                    transparent 0 28%,
-                    rgba(232, 154, 154, 0.18) 28% 60%,
-                    transparent 60% 100%
-    ),
-    radial-gradient(
-                    55% 34% at 55% 36%,
-                    rgba(232, 154, 154, 0.18) 0 70%,
-                    transparent 70.5%
-    ),
-    radial-gradient(
-                    44% 28% at 48% 66%,
-                    rgba(232, 154, 154, 0.18) 0 72%,
-                    transparent 72.5%
-    ),
-    radial-gradient(
-                    36% 28% at 51% 94%,
-                    rgba(232, 154, 154, 0.18) 0 72%,
-                    transparent 72.5%
-    );
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='396' height='512' viewBox='0 0 396 512' fill='none'%3E%3Cpath opacity='0.1' d='M-225 592.463C-6.2734 581.157 514.869 557.18 192.046 396.931C-55.9087 273.848 426.383 345.381 326.538 153.129C246.663 -0.67277 -150.942 -96.3987 -150.942 -96.3987' stroke='%23E9292C' stroke-width='114'/%3E%3C/svg%3E");
+
+    @media (min-width: 768px) {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='608' height='400' viewBox='0 0 608 400' fill='none'%3E%3Cpath opacity='0.1' d='M1001.04 591.135C840.658 314.731 462.382 -345.807 469.402 180.006C474.795 583.873 246.384 -89.8542 63.3256 167.822C-83.121 373.964 57.4719 953.872 57.4719 953.872' stroke='%23E9292C' stroke-width='114'/%3E%3C/svg%3E");
+    }
   }
 
   .sell {
@@ -90,6 +119,7 @@
 
     will-change: transform, opacity;
 
+
     span {
       display: block;
       font-size: 14px;
@@ -97,6 +127,10 @@
       color: #000;
       position: relative;
       z-index: 2;
+
+      @media (min-width: 768px) {
+        font-size: 16px;
+      }
     }
 
     .icon {
@@ -121,6 +155,11 @@
     height: 25%;
     left: 7.2%;
     top: 6.4%;
+
+    @media (min-width: 768px) {
+      width: 22%;
+      height: auto;
+    }
   }
 
   .sell.turist {
@@ -128,6 +167,12 @@
     height: 25%;
     right: 4.2%;
     top: 12.5%;
+
+    @media (min-width: 768px) {
+      width: 22%;
+      height: auto;
+      top: 10%;
+    }
   }
 
   .sell.may {
@@ -135,6 +180,12 @@
     height: 29%;
     left: 4.3%;
     top: 36.8%;
+
+    @media (min-width: 768px) {
+      width: 27%;
+      top: 61%;
+      height: auto;
+    }
   }
 
   .sell.teplo {
@@ -142,6 +193,13 @@
     height: 25%;
     right: 4.4%;
     top: 41.6%;
+
+    @media (min-width: 768px) {
+      width: 24.74%;
+      right: 34.4%;
+      top: 18.6%;
+      height: auto;
+    }
   }
 
   .sell.money {
@@ -149,6 +207,13 @@
     height: 21%;
     left: 21.5%;
     bottom: 2.6%;
+
+    @media (min-width: 768px) {
+      width: 28.07%;
+      left: 61.5%;
+      bottom: 3.6%;
+      height: auto;
+    }
   }
 }
 
@@ -159,10 +224,32 @@
   inset: 0;
   overflow: clip;
   z-index: 1;
+  pointer-events: none;
 
   > svg {
     width: 90%;
     height: 90%;
     margin-left: 15%;
+  }
+}
+
+
+
+svg:has(.road-line--mobile) {
+  display: block;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+svg:has(.road-line--desktop) {
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
   }
 }
